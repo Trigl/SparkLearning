@@ -18,7 +18,7 @@ object SparkDemo {
     val sparkConf = new SparkConf().setAppName("CountDemo")
     val sc = new SparkContext(sparkConf)
 
-    // 读取文件~
+    // 读取文件
     val rdd = sc.textFile(args(0))
 
     println(args(0) + "的行数为：" + rdd.count())
