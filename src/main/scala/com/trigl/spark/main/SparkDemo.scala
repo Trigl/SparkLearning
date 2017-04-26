@@ -1,4 +1,4 @@
-package com.trigl.spark
+package com.trigl.spark.main
 
 import org.apache.spark.{SparkConf, SparkContext}
 
