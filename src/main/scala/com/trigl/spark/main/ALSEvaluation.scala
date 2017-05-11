@@ -100,7 +100,7 @@ object ALSEvaluation {
         bestNumIter = numIter
       }
     }
-    val predictions = bestModel.get.transform(validation)
+    val predictions = bestModel.get.transform(validation).filter("prediction < 1000")
 
     val evaluator = new RegressionEvaluator()
       .setMetricName("rmse")
