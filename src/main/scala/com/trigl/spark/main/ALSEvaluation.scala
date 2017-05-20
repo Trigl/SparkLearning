@@ -80,7 +80,6 @@ object ALSEvaluation {
         .setUserCol("userid")
         .setItemCol("itemid")
         .setRatingCol("rating")
-        .setPredictionCol("prediction")
       val model = als.fit(training)
       // 必须过滤，因为会产生NaN预测数据，详情见：https://issues.apache.org/jira/browse/SPARK-14489
       val predictions = model.transform(validation).filter("prediction < 1000")
