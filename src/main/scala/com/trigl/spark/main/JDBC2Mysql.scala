@@ -30,7 +30,7 @@ object JDBC2Mysql {
         "user" -> DbUtil.IMEI_DB_USERNAME,
         "password" -> DbUtil.IMEI_DB_PASSWORD,
         "driver" -> "com.mysql.jdbc.Driver",
-        //"fetchSize" -> "1000",
+//        "fetchSize" -> "1000",
         "partitionColumn" -> "id",
         "lowerBound" -> "1",
         "upperBound" -> "15509195",
