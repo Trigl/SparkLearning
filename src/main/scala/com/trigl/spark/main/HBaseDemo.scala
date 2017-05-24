@@ -16,7 +16,7 @@ object HBaseDemo {
   def main(args: Array[String]) {
     Logger.getLogger("org.apache.spark").setLevel(Level.WARN)
     System.setProperty("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
-    val sparkConf = new SparkConf().setAppName("JDBC2Mysql")
+    val sparkConf = new SparkConf().setAppName("HBaseDemo")
     val sc = new SparkContext(sparkConf)
 
     val data = sc.textFile("/test/imei.txt").mapPartitions(getHBaseInfo)
