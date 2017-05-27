@@ -7,7 +7,7 @@ import org.apache.hadoop.hbase.protobuf.ProtobufUtil
 import org.apache.hadoop.hbase.util.{Base64, Bytes}
 
 
-object HbaseUtil {
+object HBaseUtil {
   val HBASE_ZOOKEEPER_QUORUM = "fenxi-xlg,fenxi-mrg,fenxi-xxf,fenxi-ptd,fenxi-xz"
   val HBASE_ZOOKEEPER_PROPERTY_CLIENTPORT = "2181"
   
@@ -18,6 +18,7 @@ object HbaseUtil {
   val TABLE_NAME_CPZ_APP = "cpz_app"
   val TABLE_NAME_CPZ_SOURCE_V2 = "cpz_source_v2"
   val TABLE_NAME_CPZ_APP_V2 = "cpz_app_v2"
+  val TABLE_NAME_ARR_OLD = "sta"
   
   
    def convertScanToString(scan: Scan) = {

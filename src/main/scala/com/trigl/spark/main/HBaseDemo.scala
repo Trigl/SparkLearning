@@ -1,6 +1,6 @@
 package com.trigl.spark.main
 
-import com.trigl.spark.util.HbaseUtil
+import com.trigl.spark.util.HBaseUtil
 import org.apache.hadoop.hbase.TableName
 import org.apache.hadoop.hbase.client.{Result, Scan}
 import org.apache.hadoop.hbase.util.Bytes
@@ -43,16 +43,16 @@ object HBaseDemo {
     var pkgList = List[(String, (String, String))]() // 结果格式为(日期,(主键,包名集合))
 
     // 建立连接查询表
-    val conn = HbaseUtil.getConnection(HbaseUtil.TABLE_NAME_CPZ_APP)
-    val table = conn.getTable(TableName.valueOf(HbaseUtil.TABLE_NAME_CPZ_APP))
+    val conn = HBaseUtil.getConnection(HBaseUtil.TABLE_NAME_CPZ_APP)
+    val table = conn.getTable(TableName.valueOf(HBaseUtil.TABLE_NAME_CPZ_APP))
 
     // 新建Scan用于指定查询内容
     val scan = new Scan()
     scan.setCaching(10000)
     scan.setCacheBlocks(false)
     // 要查询的列
-    scan.addColumn(HbaseUtil.COLUMN_FAMILY.getBytes, "packagelist".getBytes)
-    scan.addColumn(HbaseUtil.COLUMN_FAMILY.getBytes, "cdate".getBytes)
+    scan.addColumn(HBaseUtil.COLUMN_FAMILY.getBytes, "packagelist".getBytes)
+    scan.addColumn(HBaseUtil.COLUMN_FAMILY.getBytes, "cdate".getBytes)
 
     while (iter.hasNext) {
       // 要查询的前缀
@@ -68,9 +68,9 @@ object HBaseDemo {
         // 主键
         val key = Bytes.toString(result.getRow)
         // 日期
-        val cdate = Bytes.toString(result.getValue(HbaseUtil.COLUMN_FAMILY.getBytes, "cdate".getBytes))
+        val cdate = Bytes.toString(result.getValue(HBaseUtil.COLUMN_FAMILY.getBytes, "cdate".getBytes))
         // 包列表
-        val packagelist = Bytes.toString(result.getValue(HbaseUtil.COLUMN_FAMILY.getBytes, "packagelist".getBytes))
+        val packagelist = Bytes.toString(result.getValue(HBaseUtil.COLUMN_FAMILY.getBytes, "packagelist".getBytes))
 
         // 添加到集合中
         pkgList.::=(cdate, (key, packagelist))
