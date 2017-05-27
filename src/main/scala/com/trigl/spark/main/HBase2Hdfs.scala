@@ -39,9 +39,9 @@ object HBase2Hdfs {
     hBaseConf.set("hbase.zookeeper.quorum", HBaseUtil.HBASE_ZOOKEEPER_QUORUM)
     hBaseConf.set("hbase.zookeeper.property.clientPort", HBaseUtil.HBASE_ZOOKEEPER_PROPERTY_CLIENTPORT)
     hBaseConf.set(TableInputFormat.INPUT_TABLE, HBaseUtil.TABLE_NAME_ARR_OLD)
-    hBaseConf.setInt("hbase.rpc.timeout", 120000)
-    hBaseConf.setInt("hbase.client.operation.timeout", 120000)
-    hBaseConf.setInt("hbase.client.scanner.timeout.period", 120000)
+    hBaseConf.setInt("hbase.rpc.timeout", 1200000)
+    hBaseConf.setInt("hbase.client.operation.timeout", 1200000)
+    hBaseConf.setInt("hbase.client.scanner.timeout.period", 1200000)
     //添加过滤条件，数据必须是2016年的
     val scan = new Scan()
     scan.setFilter(new RowFilter(CompareFilter.CompareOp.EQUAL, new SubstringComparator(args(0))))
