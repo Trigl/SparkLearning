@@ -1,13 +1,13 @@
 package com.trigl.spark.main
 
-import java.text.SimpleDateFormat
 import java.util.Date
 
 import com.trigl.spark.util.{HBaseUtil, MyMultipleTextOutputFormat}
 import org.apache.commons.lang3.StringUtils
+import org.apache.commons.lang3.time.FastDateFormat
 import org.apache.hadoop.hbase.HBaseConfiguration
 import org.apache.hadoop.hbase.client.{Result, Scan}
-import org.apache.hadoop.hbase.filter.{CompareFilter, RowFilter, SubstringComparator}
+import org.apache.hadoop.hbase.filter.{CompareFilter, RegexStringComparator, RowFilter}
 import org.apache.hadoop.hbase.mapreduce.TableInputFormat
 import org.apache.hadoop.hbase.util.Bytes
 import org.apache.log4j.{Level, Logger}
@@ -21,6 +21,8 @@ object HBase2Hdfs {
 
   // 存放解析后的到达数据的路径
   val ARRIVAL_DIR = "/test/old/arrival_data"
+  // SimpleDateFormat非线程安全，使用这个类来代替
+  val fdf = FastDateFormat.getInstance("yyyy/MM/dd/")
 
   def main(args: Array[String]) {
 
@@ -42,9 +44,10 @@ object HBase2Hdfs {
     hBaseConf.setInt("hbase.rpc.timeout", 1200000)
     hBaseConf.setInt("hbase.client.operation.timeout", 1200000)
     hBaseConf.setInt("hbase.client.scanner.timeout.period", 1200000)
-    //添加过滤条件，数据必须是2016年的
+
+    // 行过滤器：正则匹配
     val scan = new Scan()
-    scan.setFilter(new RowFilter(CompareFilter.CompareOp.EQUAL, new SubstringComparator(args(0))))
+    scan.setFilter(new RowFilter(CompareFilter.CompareOp.EQUAL, new RegexStringComparator("^.{32}" + args(0) + ".*$")))
     hBaseConf.set(TableInputFormat.SCAN, HBaseUtil.convertScanToString(scan))
 
     // 应用newAPIHadoopRDD读取HBase，返回NewHadoopRDD
@@ -100,8 +103,7 @@ object HBase2Hdfs {
       val acceptTimestamp = Bytes.toString(row.getValue(Bytes.toBytes(HBaseUtil.COLUMN_FAMILY), Bytes.toBytes("acceptTimestamp")))
 
       val date = new Date(acceptTimestamp.toLong)
-      val df = new SimpleDateFormat("yyyy/MM/dd/")
-      day = df.format(date)
+      day = fdf.format(date)
 
       val arr = apps.split(";")
       // 获取签名crc和包名
