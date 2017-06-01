@@ -1,12 +1,12 @@
-package com.trigl.spark.main
+package com.trigl.spark.arrival
 
 import java.text.SimpleDateFormat
 import java.util.Calendar
 
 import com.trigl.spark.util.HDFSUtil
 import org.apache.spark.SparkConf
-import org.apache.spark.sql.{Row, SparkSession}
 import org.apache.spark.sql.types._
+import org.apache.spark.sql.{Row, SparkSession}
 
 import scala.collection.mutable.ListBuffer
 

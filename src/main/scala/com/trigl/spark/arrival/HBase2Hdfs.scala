@@ -1,4 +1,4 @@
-package com.trigl.spark.main
+package com.trigl.spark.arrival
 
 import java.util.Date
 
@@ -33,6 +33,8 @@ object HBase2Hdfs {
 
     Logger.getLogger("org.apache.spark").setLevel(Level.WARN)
     System.setProperty("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
+    // 解决各种超时问题
+    System.setProperty("spark.network.timeout", "600s")
     val sparkConf = new SparkConf().setAppName("HBase2Hdfs_" + args(0))
     val sc = new SparkContext(sparkConf)
 
